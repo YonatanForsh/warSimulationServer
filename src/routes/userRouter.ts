@@ -14,6 +14,7 @@ export const login = async (req: Request, res: Response) => {
 export const register = async (req: Request, res: Response) => {
     try {
         await createUser(req, res)
+        res.status(200)
     } catch (error) {
         console.log("Can't create user", error);    
     }

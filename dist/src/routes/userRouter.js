@@ -15,6 +15,7 @@ exports.login = login;
 const register = async (req, res) => {
     try {
         await (0, userServies_1.createUser)(req, res);
+        res.status(200);
     }
     catch (error) {
         console.log("Can't create user", error);
