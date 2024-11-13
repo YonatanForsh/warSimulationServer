@@ -5,6 +5,14 @@ export const connectToMongo = async () => {
         connect(process.env.DB_URL as string)
         console.log("Connected to mongo");   
     } catch (error) {
-        console.log("Cant connect to database", error);      
+        console.log("Can't connect to database", error);      
+    }
+}
+
+export const initialOrgData = async () => {
+    try {
+        
+    } catch (error) {
+        console.log("Can't save organization to database", error);      
     }
 }
