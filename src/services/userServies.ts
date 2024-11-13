@@ -2,20 +2,21 @@ import { Request, Response } from "express";
 import userSchema from "../models/userSchema";
 import bcrypt, { compare } from "bcrypt"
 import { LoginDto } from "../dto/userDto";
+import organizationList from "../../Data/organization.json"
 import { sign } from "jsonwebtoken";
 import Jwt from "jsonwebtoken";
+import { IOrg } from "../models/orgModel";
 
 
 export const createUser = async (req: Request, res: Response) => {
     try {
         const { username, password, org, location } = req.body;
+        const organization = checkOrgName(organizationList, org)
         const hashPass = await bcrypt.hash(password, 10)
-        const newUser = new userSchema({ username, password: hashPass, org, location })
+        const newUser = new userSchema({ username, password: hashPass, org: organization, location })
         await newUser.save()
-        console.log("User created successfuly!")
         res.status(201).json({ message: "User created successfully!" });
     } catch (error) {
-        console.log("Can't create user", error);
         res.status(500).json({ message: "User creation failed", error });
     }
 }
@@ -42,3 +43,7 @@ export const userLogin = async (user: LoginDto) => {
         throw err;
     }
 };
+
+function checkOrgName(list:any[], name:string) {
+    return list.find(org => org.name === name);
+}

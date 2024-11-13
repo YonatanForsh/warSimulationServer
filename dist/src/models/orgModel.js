@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
-const userSchema = new mongoose_1.Schema({
+const orgSchema = new mongoose_1.Schema({
     name: {
         type: String,
         unique: true,
         required: true
     },
-    resource: {
+    resources: {
         type: [],
         required: true
     },
@@ -15,4 +15,4 @@ const userSchema = new mongoose_1.Schema({
         type: Number,
     }
 });
-exports.default = (0, mongoose_1.model)("organization", userSchema);
+exports.default = (0, mongoose_1.model)("organization", orgSchema);

@@ -2,17 +2,17 @@ import { Schema, Types, Document, model } from "mongoose"
 
 export interface IOrg extends Document {
     name: string
-    resource: []
+    resources: []
     budget: number
 }
 
-const userSchema = new Schema<IOrg>({
+const orgSchema = new Schema<IOrg>({
     name: {
         type: String,
         unique: true,
         required: true
     },
-    resource: {
+    resources: {
         type: [],
         required: true
     },
@@ -21,4 +21,4 @@ const userSchema = new Schema<IOrg>({
     }
 })
 
-export default model<IOrg>("organization", userSchema)
+export default model<IOrg>("organization", orgSchema)

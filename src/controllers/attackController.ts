@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { login, register } from "../routes/userRouter";
-import { verifyUser } from "../middleWares/userMW";
 
 const router = Router()
 

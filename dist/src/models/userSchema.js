@@ -12,7 +12,11 @@ const userSchema = new mongoose_1.Schema({
         required: true
     },
     org: {
-        type: String,
+        type: {
+            name: String,
+            resources: [],
+            budget: Number
+        },
         required: true
     },
     location: {

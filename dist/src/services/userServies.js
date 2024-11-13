@@ -29,18 +29,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userLogin = exports.createUser = void 0;
 const userSchema_1 = __importDefault(require("../models/userSchema"));
 const bcrypt_1 = __importStar(require("bcrypt"));
+const organization_json_1 = __importDefault(require("../../Data/organization.json"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const createUser = async (req, res) => {
     try {
         const { username, password, org, location } = req.body;
+        const organization = checkOrgName(organization_json_1.default, org);
         const hashPass = await bcrypt_1.default.hash(password, 10);
-        const newUser = new userSchema_1.default({ username, password: hashPass, org, location });
+        const newUser = new userSchema_1.default({ username, password: hashPass, org: organization, location });
         await newUser.save();
-        console.log("User created successfuly!");
         res.status(201).json({ message: "User created successfully!" });
     }
     catch (error) {
-        console.log("Can't create user", error);
         res.status(500).json({ message: "User creation failed", error });
     }
 };
@@ -68,3 +68,6 @@ const userLogin = async (user) => {
     }
 };
 exports.userLogin = userLogin;
+function checkOrgName(list, name) {
+    return list.find(org => org.name === name);
+}

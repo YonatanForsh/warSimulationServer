@@ -1,9 +1,10 @@
 import { Schema, Types, Document, model } from "mongoose"
+import { IOrg } from "./orgModel"
 
 export interface IUser extends Document {
     username: string
     password: string
-    org: string
+    org: IOrg
     location?: string
 }
 
@@ -18,7 +19,11 @@ const userSchema = new Schema<IUser>({
         required: true
     },
     org: {
-        type: String,
+        type: {
+            name: String,
+            resources: [],
+            budget: Number
+        },
         required: true
     },
     location: {
