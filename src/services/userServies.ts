@@ -23,11 +23,10 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const userLogin = async (user: LoginDto) => {
     try {
-        const userFromDatabase = await userSchema.findOne({ username: user.username }).lean();   
+        const userFromDatabase = await userSchema.findOne({ username: user.username }).lean();  
         if (!userFromDatabase) throw new Error("user not found");
         const match = await compare(user.password, userFromDatabase.password);
         if (!match) throw new Error("wrong password");
-
         const token = await Jwt.sign({
             user_id: userFromDatabase._id,
             username: userFromDatabase.username,
@@ -37,7 +36,7 @@ export const userLogin = async (user: LoginDto) => {
             {
                 expiresIn: "10m"
             }
-        );        
+        );   
         return {...userFromDatabase, token, password: "*******"};
     } catch (err) {
         throw err;

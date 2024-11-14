@@ -32,7 +32,7 @@ const initialOrgData = async () => {
 exports.initialOrgData = initialOrgData;
 const saveOrgData = async (org) => {
     try {
-        const newOrg = new orgModel_1.default({ name: org.name, resource: org.resource, budget: org.budget });
+        const newOrg = new orgModel_1.default({ name: org.name, resource: org.resources, budget: org.budget });
         await newOrg.save();
     }
     catch (error) {

@@ -10,6 +10,9 @@ const actionSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
+    speed: {
+        type: Number,
+    },
     area: {
         type: String,
         required: true

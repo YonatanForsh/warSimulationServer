@@ -5,10 +5,28 @@ import "dotenv/config"
 import userController from "./controllers/userController"
 import attackController from "./controllers/attackController"
 import protectionController from "./controllers/protectionController"
+import actionController from "./controllers/actionController"
+import { Server } from "socket.io"
+import  http from "http"
+import { actionsToClient, handleConnection } from "./sockets/io"
+import actionServies from "./services/actionServies"
 
 
 const PORT = process.env.PORT || 2020
 const app = exp()
+const httpServer =  http.createServer(app)
+export const io = new Server(httpServer, 
+    {
+        cors: {
+            origin: "*",
+            methods: "*"
+        }
+    }
+)
+
+
+io.on('connection', handleConnection)
+// actionsToClient()
 connectToMongo()
 initialOrgData()
 app.use(exp.json())
@@ -16,7 +34,8 @@ app.use(cors())
 
 app.use("/api/users", userController)
 app.use("/api/attacks", attackController)
-app.use("/api/attacks", protectionController)
+app.use("/api/protects", protectionController)
+app.use("/api/actions", actionController)
 
-app.listen(PORT, () => console.log(`Server is runing! visit "http://localhost:${PORT}"`));
+httpServer.listen(PORT, () => console.log(`Server is runing! visit "http://localhost:${PORT}"`));
 

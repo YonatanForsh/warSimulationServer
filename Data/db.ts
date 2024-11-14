@@ -26,7 +26,7 @@ export const initialOrgData = async () => {
 
 export const saveOrgData = async (org: IOrg) => {
     try {
-        const newOrg = new orgSchema({ name: org.name, resource: org.resource, budget: org.budget })
+        const newOrg = new orgSchema({ name: org.name, resource: org.resources, budget: org.budget })
         await newOrg.save()
     } catch (error) {
         console.log("Cant saveorg data", error);

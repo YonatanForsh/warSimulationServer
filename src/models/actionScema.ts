@@ -3,6 +3,7 @@ import { Schema, Document, model } from "mongoose"
 export interface IAction extends Document {
     userAttackId: string
     missile: string
+    speed: number
     area: string
     status: string
 }
@@ -15,6 +16,9 @@ const actionSchema = new Schema<IAction>({
     missile: {
         type: String,
         required: true
+    },
+    speed: {
+        type: Number,
     },
     area: {
         type: String,

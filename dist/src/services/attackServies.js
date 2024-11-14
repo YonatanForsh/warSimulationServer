@@ -10,8 +10,8 @@ const shutMissile = async (req, res) => {
     const { user_id, missileName, area } = req.body;
     try {
         await updateMissilesAmmount(user_id, missileName);
-        await createAction(user_id, missileName, area);
-        return res.status(200).send('Missile amount updated');
+        const newAction = await createAction(user_id, missileName, area);
+        return res.status(200).send(newAction);
     }
     catch (err) {
         return res.status(500).send('Server error');
