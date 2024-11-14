@@ -6,7 +6,7 @@ import userController from "./controllers/userController"
 import attackController from "./controllers/attackController"
 import protectionController from "./controllers/protectionController"
 import actionController from "./controllers/actionController"
-import { Server } from "socket.io"
+import { Server, Socket } from "socket.io"
 import  http from "http"
 import { actionsToClient, handleConnection } from "./sockets/io"
 import actionServies from "./services/actionServies"
@@ -26,7 +26,7 @@ export const io = new Server(httpServer,
 
 
 io.on('connection', handleConnection)
-// actionsToClient()
+
 connectToMongo()
 initialOrgData()
 app.use(exp.json())

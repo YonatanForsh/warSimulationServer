@@ -25,7 +25,6 @@ exports.io = new socket_io_1.Server(httpServer, {
     }
 });
 exports.io.on('connection', io_1.handleConnection);
-// actionsToClient()
 (0, db_1.connectToMongo)();
 (0, db_1.initialOrgData)();
 app.use(express_1.default.json());

@@ -6,11 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const userSchema_1 = __importDefault(require("../models/userSchema"));
 const actionScema_1 = __importDefault(require("../models/actionScema"));
 const missiles_json_1 = __importDefault(require("../../Data/missiles.json"));
+const app_1 = require("../app");
 const shutMissile = async (req, res) => {
     const { user_id, missileName, area } = req.body;
     try {
         await updateMissilesAmmount(user_id, missileName);
         const newAction = await createAction(user_id, missileName, area);
+        emitToClient();
         return res.status(200).send(newAction);
     }
     catch (err) {
@@ -29,10 +31,11 @@ const createAction = async (user_id, missileName, area) => {
     if (typeof (time) == "number") {
         time = time * 1000;
     }
-    console.log(time);
+    const speed = missiles_json_1.default.find((m) => m.name == missileName);
     const newAction = new actionScema_1.default({
         userAttackId: user_id,
         missile: missileName,
+        speed: speed === null || speed === void 0 ? void 0 : speed.speed,
         area: area,
         status: "inAir"
     });
@@ -44,6 +47,10 @@ const createAction = async (user_id, missileName, area) => {
 const missileTime = async (missileName) => {
     const missile = missiles_json_1.default.find((m) => m.name == missileName);
     return missile === null || missile === void 0 ? void 0 : missile.speed;
+};
+const emitToClient = () => {
+    // io.on("newAttack", ({socket, data}) => {
+    app_1.io.emit("returnAttack");
 };
 exports.default = {
     shutMissile
