@@ -10,6 +10,7 @@ import { IOrg } from "../models/orgModel";
 
 export const createUser = async (req: Request, res: Response) => {
     try {
+        console.log("enter to create user function");
         const { username, password, org, location } = req.body;
         const organization = checkOrgName(organizationList, org)
         const hashPass = await bcrypt.hash(password, 10)
@@ -43,6 +44,6 @@ export const userLogin = async (user: LoginDto) => {
     }
 };
 
-function checkOrgName(list:any[], name:string) {
-    return list.find(org => org.name === name);
+function checkOrgName(list:any[], name:string) {    
+    return list.find(org => org.name == name);
 }
