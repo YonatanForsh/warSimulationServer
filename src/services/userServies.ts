@@ -10,16 +10,14 @@ import { IOrg } from "../models/orgModel";
 
 export const createUser = async (req: Request, res: Response) => {
     try {
-        console.log("enter to create user function");
         const { username, password, org, location } = req.body;
         const organization = checkOrgName(organizationList, org)
+        console.log(username,password,org,location,organization);    
         const hashPass = await bcrypt.hash(password, 10)
         const newUser = new userSchema({ username, password: hashPass, org: organization, location })
         await newUser.save()
         res.status(201).json({ message: "User created successfully!" });
-    } catch (error) {
-        console.log("123");
-        
+    } catch (error) {        
         res.status(500).json({ message: "User creation failed", error });
     }
 }
